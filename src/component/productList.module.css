@@ -1,0 +1,15 @@
+.product{
+    border: 1px solid blue;
+    width: 30%;
+    margin-top: 2%;
+    margin-left: 35%;
+    
+}
+.product button
+{    background-color: rgb(83, 167, 196);
+    color: black;
+    margin-left: 25%;
+}
+.product span{
+    padding-left: 2%;
+}
