@@ -1,4 +1,5 @@
-import React,{useContext} from 'react'
+import React from 'react'
+import {useContext} from 'react'
 import {NewContext} from '../context/shopContext'
 import style from './productList.module.css'
 export default function ProductList() {
