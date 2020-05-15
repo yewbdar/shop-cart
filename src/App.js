@@ -5,9 +5,9 @@ import { NewContext } from './context/shopContext'
 import ProductList from './component/ProductList'
    
 class App extends React.PureComponent {
-  state ={
+  state = {
     product :[{
-      id:1, name:'book',price:'$50',total:30,inCart:0,shop:false},
+      id:1, name:'book',price:'$50',total:2,inCart:0,shop:false},
       {id:2,name:'pan',price:'$90',total:20,inCart:0, shop:false},
       {id:3,name:'light',price:'$30',total:7,inCart:0,shop:false},
       {id:4,name:'sheep',price:'$80',total:35,inCart:0,shop:false},
@@ -16,37 +16,41 @@ class App extends React.PureComponent {
    isProduct:true
   }
   addToCart =  (id) => {
-
-       
        const ifExist = this.state.cart.filter(item =>  item.id == id).length > 0
-       const updateCartTotal = this.state.product.map(item => {if(item.id == id) 
+       const updateCartTotal = this.state.product.map(item => {
+         if(item.id == id ) 
         { return {...item,total:item.total -= 1,
-                  inCart:item.inCart += 1 }} 
+                  inCart:item.inCart += 1}} 
                   else { return item }})
             
         if(ifExist) {
           console.log(ifExist)
-           this.state.cart.forEach(item => { 
-            if(item.id == id) {
-            this.setState({cart:[{...this.state.cart, ...item, inCart:item.inCart += 1}]})
-            
+          //  this.state.cart.forEach(item => { 
+            // if(item.id == id) {
+              // const newItem = {...item, inCart:item.inCart += 1}
+            this.setState({cart:[{...this.state.cart.map(item => ( item.id == id && {...item, inCart:item.inCart +1})) }]})
             }
-          })
-          }else{
-                        const newObj = updateCartTotal.filter(item => item.id == id)
+          // })
+          // } 
+          else {
+           const newObj = updateCartTotal.filter(item => item.id == id)
            this.setState({cart:[...this.state.cart,...newObj]})
           }
+        
 }
-  removeFromCart = () => {
-
+  removeFromCart = (id) => {
+    console.log(id)
+          this.state.cart.forEach(item => {
+            if(item.id === id){
+                this.setState({cart:[{...item , shop:item.shop = true }]})
+            }
+          })
   }
   activButton = (name) => {
     let value = true;
     if(name == 'cart') 
     { value = false} 
-   
     this.setState({isProduct:value},console.log('isProduct',this.state.isProduct))
-    
   }
   render(){
     console.log('cart',this.state.cart)
@@ -57,8 +61,8 @@ class App extends React.PureComponent {
             cart:this.state.cart,
             isProduct:this.state.isProduct,
             addToCart:this.addToCart,
-            removeFromCart:this.romveFromCart,
-            activButton:this.activButton
+            activButton:this.activButton,
+            removeFromCart:this.removeFromCart,
        }
        }>
        <Header/>
