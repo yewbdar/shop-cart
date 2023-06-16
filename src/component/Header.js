@@ -1,14 +1,32 @@
-import React,{useContext} from 'react'
-import style from './header.module.css'
-import {NewContext} from '../context/shopContext'
-import NewCom from './NewCom'
-export default function Header() {
-     const {activButton , cart , product } = useContext(NewContext)
+import React from 'react'
+import A from 'shield/react-tooltip'
+import { B } from 'shield/react-icons'
+
+
+const Tooltip = (props) => {
+    const {
+        ariaLabel = 'info',
+        direction = 'top',
+        variant,
+        children,
+        addClasses
+    } = props
+
     return (
-        <div className={style.header}>
-            <button onClick={()=> activButton('prduct')}>product </button><span>{product.length}</span>
-            <button onClick={()=> activButton('cart')}>cart </button><span>{cart.length}</span>
-             {/* <NewCom/> */}
-        </div>
+        <A
+        data-testid="Tooltip"
+            ariaLabel={ariaLabel}
+            direction={direction}
+            variant={variant}
+            addClasses={addClasses}
+            toolTipIcon={() => (
+                <B toolTipVisible={false} size={18} />
+            )}
+        >
+            {children}
+        </A>
     )
 }
+
+export default Tooltip
+
