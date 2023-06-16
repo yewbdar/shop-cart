@@ -1,32 +1,27 @@
-import React from 'react'
-import A from 'shield/react-tooltip'
-import { B } from 'shield/react-icons'
+import React from 'react';
+import { render } from '@testing-library/react';
+import Tooltip from './Tooltip';
 
+describe('Tooltip component', () => {
+  it('renders the tooltip with correct props', () => {
+    const { getByTestId } = render(
+      <Tooltip
+        ariaLabel="Test Tooltip"
+        direction="bottom"
+        variant="default"
+        addClasses="custom-class"
+      >
+        <span>Tooltip Content</span>
+      </Tooltip>
+    );
 
-const Tooltip = (props) => {
-    const {
-        ariaLabel = 'info',
-        direction = 'top',
-        variant,
-        children,
-        addClasses
-    } = props
+    const tooltip = getByTestId('Tooltip');
+    expect(tooltip).toBeInTheDocument();
+    expect(tooltip).toHaveAttribute('ariaLabel', 'Test Tooltip');
+    expect(tooltip).toHaveAttribute('direction', 'bottom');
+    expect(tooltip).toHaveAttribute('variant', 'default');
+    expect(tooltip).toHaveAttribute('addClasses', 'custom-class');
+  });
+});
 
-    return (
-        <A
-        data-testid="Tooltip"
-            ariaLabel={ariaLabel}
-            direction={direction}
-            variant={variant}
-            addClasses={addClasses}
-            toolTipIcon={() => (
-                <B toolTipVisible={false} size={18} />
-            )}
-        >
-            {children}
-        </A>
-    )
-}
-
-export default Tooltip
 
