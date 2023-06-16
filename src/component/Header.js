@@ -1,10 +1,10 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { shallow } from 'enzyme';
 import Tooltip from './Tooltip';
 
 describe('Tooltip component', () => {
   it('renders the tooltip with correct props', () => {
-    const { getByTestId } = render(
+    const wrapper = shallow(
       <Tooltip
         ariaLabel="Test Tooltip"
         direction="bottom"
@@ -15,13 +15,14 @@ describe('Tooltip component', () => {
       </Tooltip>
     );
 
-    const tooltip = getByTestId('Tooltip');
-    expect(tooltip).toBeInTheDocument();
-    expect(tooltip).toHaveAttribute('ariaLabel', 'Test Tooltip');
-    expect(tooltip).toHaveAttribute('direction', 'bottom');
-    expect(tooltip).toHaveAttribute('variant', 'default');
-    expect(tooltip).toHaveAttribute('addClasses', 'custom-class');
+    expect(wrapper.exists('[data-testid="Tooltip"]')).toBe(true);
+    expect(wrapper.prop('ariaLabel')).toBe('Test Tooltip');
+    expect(wrapper.prop('direction')).toBe('bottom');
+    expect(wrapper.prop('variant')).toBe('default');
+    expect(wrapper.prop('addClasses')).toBe('custom-class');
+    expect(wrapper.find('span').text()).toBe('Tooltip Content');
   });
 });
+
 
 
